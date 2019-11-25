@@ -46,12 +46,12 @@ HOSTCC		:= gcc
 HOSTCFLAGS	:= -g -Wall -O2
 
 CC		:= $(GCCPREFIX)gcc
-CFLAGS	:= -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc $(DEFS)
+CFLAGS	:= -fno-builtin -fno-PIC -Wall -ggdb -m32 -gstabs -nostdinc $(DEFS)
 CFLAGS	+= $(shell $(CC) -fno-stack-protector -E -x c /dev/null >/dev/null 2>&1 && echo -fno-stack-protector)
 CTYPE	:= c S
 
 LD      := $(GCCPREFIX)ld
-LDFLAGS	:= -m $(shell $(LD) -V | grep elf_i386 2>/dev/null)
+LDFLAGS	:= -m $(shell $(LD) -V | grep elf_i386 2>/dev/null | head -n 1)
 LDFLAGS	+= -nostdlib
 
 OBJCOPY := $(GCCPREFIX)objcopy
